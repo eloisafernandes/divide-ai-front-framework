@@ -1,5 +1,5 @@
 import { formatMoney, formatDateTime } from '@/utils/Formatter';
-import { generateColor } from "../listGroup/GroupAvatars";
+import { generateColor } from "../listTrip/GroupAvatars";
 import { Avatar, AvatarFallback } from "../../ui/avatar";
 import { IDebt } from "@/interfaces/IDebt";
 import { EditPagament } from "@/components/groups/transactions/EditPagament";

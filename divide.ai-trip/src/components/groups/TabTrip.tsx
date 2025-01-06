@@ -15,9 +15,9 @@ import {
 } from "@/components/ui/tabs"
 import { IUserResponse } from "@/interfaces/IUser"
 import { Avatar, AvatarFallback } from "../ui/avatar"
-import { IGroup } from "@/interfaces/IGroup"
+import { ITrip } from "@/interfaces/IGroup"
 import { useState } from "react"
-import { useGroupDeleteMember } from "@/hooks/group/groupHook"
+import { useTripDeleteMember } from "@/hooks/trip/tripHook"
 import {
     Dialog,
     DialogContent,
@@ -27,18 +27,18 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus, PlusCircle, Trash2 } from "lucide-react"
+import { Trash2 } from "lucide-react"
 import { getUserLocalStorage } from "@/context/AuthProvider/util"
 import { message } from "antd"
-import { generateColor } from "./listGroup/GroupAvatars"
+import { generateColor } from "./listTrip/GroupAvatars"
 import { SaveModal } from "./group-transaction/SaveModal"
 import { ListTransaction } from "./transactions/ListTransactions"
 
-interface TabGroupProps {
-    group: IGroup;
+interface TabTripProps {
+    trip: ITrip;
   }
   
-export function TabGroup({ group }: TabGroupProps) {
+export function TabTrip({ trip }: TabTripProps) {
     const currentUserId  = Number(getUserLocalStorage()?.id); 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -81,7 +81,7 @@ export function TabGroup({ group }: TabGroupProps) {
           </Button>
             </CardHeader>
             <CardContent className="space-y-2">
-              <ListTransaction groupId={group.id} />
+              <ListTransaction groupId={trip.id} />
             </CardContent>
             <CardFooter>
             </CardFooter>
@@ -93,12 +93,12 @@ export function TabGroup({ group }: TabGroupProps) {
             <CardHeader>
               <CardTitle>Membros</CardTitle>
               <CardDescription>
-                Confira os membros do grupo aqui!
+                Confira os membros do grupo de viagem aqui!
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <ul className="space-y-4">
-                {group.members.map((user: IUserResponse) => (
+                {trip.members.map((user: IUserResponse) => (
                   <li key={user.id} className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <Avatar>
@@ -112,8 +112,8 @@ export function TabGroup({ group }: TabGroupProps) {
                       </div>
                     </div>
 
-                    {group.createdBy.id === currentUserId && user.id !== currentUserId && (
-                      <ButtonDelete userId={user.id} groupId={group.id} />
+                    {trip.createdBy.id === currentUserId && user.id !== currentUserId && (
+                      <ButtonDelete userId={user.id} groupId={trip.id} />
                     )}
                   </li>
                 ))}
@@ -126,7 +126,7 @@ export function TabGroup({ group }: TabGroupProps) {
         <SaveModal
           isOpen={isDialogOpen}
           onClose={handleClose}
-          groupId={group.id}
+          groupId={trip.id}
         />
       )}
 
@@ -136,7 +136,7 @@ export function TabGroup({ group }: TabGroupProps) {
   
   function ButtonDelete({ userId, groupId }: { userId: number; groupId: number }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { mutate : deleteMember } = useGroupDeleteMember(groupId, userId);
+    const { mutate : deleteMember } = useTripDeleteMember(groupId, userId);
   
     const handleClose = () => {
       setIsModalOpen(false);
@@ -145,7 +145,7 @@ export function TabGroup({ group }: TabGroupProps) {
     const handleDelete = () => {
         deleteMember(undefined, {
           onSuccess: () => {
-            message.success('Você removeu o usuário do grupo com sucesso!');
+            message.success('Você removeu o usuário da viagem com sucesso!');
             setIsModalOpen(false);
           },
           onError: (error: any) => {
@@ -165,7 +165,7 @@ export function TabGroup({ group }: TabGroupProps) {
           <DialogHeader>
             <DialogTitle>Você tem certeza dessa ação?</DialogTitle>
             <DialogDescription>
-              Esta ação não pode ser desfeita. Isso excluirá permanentemente o membro do grupo.
+              Esta ação não pode ser desfeita. Isso excluirá permanentemente o membro da viagem.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

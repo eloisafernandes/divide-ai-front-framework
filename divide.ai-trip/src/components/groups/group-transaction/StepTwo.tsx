@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "../../ui/avatar"
-import { generateColor } from "../listGroup/GroupAvatars";
+import { generateColor } from "../listTrip/GroupAvatars";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatInitialName } from "@/utils/Formatter";
 

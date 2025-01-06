@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { IUser, IUserResponse } from "@/interfaces/IUser";
 import { IGroupTransactionRequest } from "@/interfaces/IGroupTransaction";
 import { getUserLocalStorage } from "@/context/AuthProvider/util";
-import { useGroupDataById } from "@/hooks/group/groupHook";
+import { useTripDataById } from "@/hooks/trip/tripHook";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { StepOne } from "./StepOne";
 import { StepTwo } from "./StepTwo";
 import { StepThree } from "./StepThree";
-import { useGroupTransactionMutate } from "@/hooks/group/UseGroupTransactions";
+import { useGroupTransactionMutate } from "@/hooks/trip/UseGroupTransactions";
 import { LoadingOutlined } from '@ant-design/icons';
 
 interface SaveModelProps {
@@ -38,7 +38,7 @@ export function SaveModal({isOpen, onClose, groupId}: SaveModelProps) {
       dueDate: new Date()
   });
 
-  const { data: group } = useGroupDataById(groupId);
+  const { data: group } = useTripDataById(groupId);
   const members = group?.members || [];
 
   const [selectedMembers, setSelectedMembers] = useState<IUserResponse[]>(members || []);

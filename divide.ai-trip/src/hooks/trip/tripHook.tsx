@@ -1,19 +1,19 @@
-import { createGroup, deleteGroup, deleteMember, getAllGroupsByUser, getGroupById, joinGroup, leaveGroup, updateGroup } from "@/services/GroupService";
+import { createTrip, deleteTrip, deleteMember, getAllTripsByUser, getTripById, joinTrip, leaveTrip, updateTrip } from "@/services/TripService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export function useGroupDataByUser() {
+export function useTripDataByUser() {
     const query = useQuery({
-        queryFn: () => getAllGroupsByUser(),
+        queryFn: () => getAllTripsByUser(),
         queryKey: ["groups-data-by-user"],
     });
 
     return query;
 }
 
-export function useGroupMutate() {
+export function useTripMutate() {
     const queryClient = useQueryClient();
     const mutate = useMutation({
-        mutationFn:  createGroup,
+        mutationFn:  createTrip,
         onSuccess: () => {  
             queryClient.invalidateQueries({ queryKey: ['groups-data-by-user'] });
         }
@@ -22,19 +22,19 @@ export function useGroupMutate() {
     return mutate;
 }
 
-export function useGroupDataById(id: number) {
+export function useTripDataById(id: number) {
     const query = useQuery({
-        queryFn: () => getGroupById(id),
+        queryFn: () => getTripById(id),
         queryKey: ["groups-data-by-id"],
     });
 
     return query;
 }
 
-export function useGroupUpdate() {
+export function useTripUpdate() {
     const queryClient = useQueryClient();
     const mutate = useMutation({
-        mutationFn:  updateGroup,
+        mutationFn:  updateTrip,
         onSuccess: () => {  
             queryClient.invalidateQueries({ queryKey: ['groups-data-by-user'] });
         }
@@ -43,10 +43,10 @@ export function useGroupUpdate() {
     return mutate;
 }
 
-export function useJoinGroup() {
+export function useJoinTrip() {
     const queryClient = useQueryClient();
     const mutate = useMutation({
-        mutationFn:  joinGroup,
+        mutationFn:  joinTrip,
         onSuccess: () => {  
             queryClient.invalidateQueries({ queryKey: ['groups-data-by-user'] });
         }
@@ -55,10 +55,10 @@ export function useJoinGroup() {
     return mutate;
 }
 
-export function useGroupDelete() {
+export function useTripDelete() {
     const queryClient = useQueryClient();
     const mutate = useMutation({
-        mutationFn:  deleteGroup,
+        mutationFn:  deleteTrip,
         onSuccess: () => {  
             queryClient.invalidateQueries({ queryKey: ['groups-data-by-user'] });
         }
@@ -67,11 +67,11 @@ export function useGroupDelete() {
     return mutate;
 }
 
-export function useGroupLeave(groupId: number, userId: number) {
+export function useTripLeave(groupId: number, userId: number) {
     const queryClient = useQueryClient();
     
     const mutate = useMutation({
-      mutationFn: () => leaveGroup(groupId, userId), 
+      mutationFn: () => leaveTrip(groupId, userId), 
       onSuccess: () => {  
         queryClient.invalidateQueries({ queryKey: ['groups-data-by-user'] });
       }
@@ -81,7 +81,7 @@ export function useGroupLeave(groupId: number, userId: number) {
 }
   
 
-export function useGroupDeleteMember(groupId: number, userId: number) {
+export function useTripDeleteMember(groupId: number, userId: number) {
     const queryClient = useQueryClient();
     
     const mutate = useMutation({

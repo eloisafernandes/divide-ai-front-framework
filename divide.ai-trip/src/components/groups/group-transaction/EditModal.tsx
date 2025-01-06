@@ -4,7 +4,7 @@ import { StepOne } from './StepOne';
 import { StepThree } from './StepThree';
 import { IGroupTransaction } from '@/interfaces/IGroupTransactions';
 import { IGroupTransactionRequest } from '@/interfaces/IGroupTransaction';
-import { useGroupTransactionDataById, useGroupTransactionUpdate } from '@/hooks/group/UseGroupTransactions';
+import { useGroupTransactionDataById, useGroupTransactionUpdate } from '@/hooks/trip/UseGroupTransactions';
 import {
     Dialog,
     DialogContent,

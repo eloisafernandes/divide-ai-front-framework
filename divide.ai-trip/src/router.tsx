@@ -6,11 +6,11 @@ import { RegisterPage } from "@/pages/login/RegisterPage";
 import { CategoryPage } from "@/pages/category/CategoryPage";
 import { TransacionPage } from "@/pages/transacion/TransacionPage";
 import { PrivateRoutes } from "./pages/PrivateRoutes";
-import { Groups } from "./pages/groups/Groups";
-import { GroupTransactionDetails } from "@/pages/groups/GroupTransactionDetails";
+import { Trips } from "./pages/trips/Trips";
+import { GroupTransactionDetails } from "@/pages/trips/GroupTransactionDetails";
 import { useEffect } from "react";
 import { initializeAxios } from "./services/api";
-import { GroupDetails } from "./pages/groups/GroupDetails";
+import { TripDetails } from "./pages/trips/TripDetails";
 import { AIPrediction } from "./pages/ai/AIPrediction";
 
 function Element({ children }: { children: JSX.Element }) {  
@@ -41,12 +41,12 @@ export const router = createBrowserRouter([
         element: <Element children={<HomePage />} />,
       },
       {
-        path: "/grupos",
-        element: <Element children={<Groups />} />,
+        path: "/viagens",
+        element: <Element children={<Trips />} />,
       },
       {
-        path: "/grupos/:id",
-        element: <Element children={<GroupDetails />} />, 
+        path: "/viagens/:id",
+        element: <Element children={<TripDetails />} />, 
       },
       {
         path: "/categorias",

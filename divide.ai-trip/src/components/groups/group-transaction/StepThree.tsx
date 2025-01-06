@@ -10,7 +10,7 @@ import { IUserResponse } from "@/interfaces/IUser";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { generateColor } from "../listGroup/GroupAvatars";
+import { generateColor } from "../listTrip/GroupAvatars";
 import { formatInitialName, formatMoney } from "@/utils/Formatter";
 
 interface StepThreeProps {

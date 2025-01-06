@@ -8,14 +8,14 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { IGroupForm } from "@/interfaces/IGroup";
+import { ITripForm } from "@/interfaces/IGroup";
 import { message } from "antd";
-import { GroupForm } from "./GroupForm";
+import { TripForm } from "./TripForm";
 import { DialogCode } from "../DialogCode";
-import { useGroupMutate } from "@/hooks/group/groupHook";
+import { useTripMutate } from "@/hooks/trip/tripHook";
 
-export function DrawerNewGroup() {
-  const { mutate: createGroup, isPending } = useGroupMutate(); 
+export function DrawerNewTrip() {
+  const { mutate: creteTrip, isPending } = useTripMutate(); 
 
   const [isOpen, setIsOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -25,13 +25,14 @@ export function DrawerNewGroup() {
     setIsOpen(false);
   };
 
-  const handleGroupSave = (values: IGroupForm) => {
-    createGroup(values, {
+  const handleGroupSave = (values: ITripForm) => {
+    console.log(values);
+    creteTrip(values, {
       onSuccess: (data) => {
         if (data) {
           setGroupCode(data.code); 
           setIsDialogOpen(true);
-          message.success("Grupo criado com sucesso!");
+          message.success("Grupo de viagem criado com sucesso!");
           setIsOpen(false);
         }
       },
@@ -44,14 +45,14 @@ export function DrawerNewGroup() {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen} onClose={handleClose}>
       <DrawerTrigger asChild onClick={() => setIsOpen(true)}>
-        <Button variant="divideDark">Novo grupo</Button>
+        <Button variant="divideDark">Novo grupo de Viagem</Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-lg flex flex-col justify-center">
           <DrawerHeader>
-            <DrawerTitle>Criar novo grupo</DrawerTitle>
-            <DrawerDescription>Preencha os detalhes para criar um novo grupo.</DrawerDescription>
-            <GroupForm onSubmit={handleGroupSave} isLoading={isPending} /> 
+            <DrawerTitle>Criar novo grupo de viagem</DrawerTitle>
+            <DrawerDescription>Preencha os detalhes.</DrawerDescription>
+            <TripForm onSubmit={handleGroupSave} isLoading={isPending} /> 
           </DrawerHeader>
         </div>
       </DrawerContent>
