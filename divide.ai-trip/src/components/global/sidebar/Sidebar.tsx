@@ -41,7 +41,7 @@ export function Sidebar() {
                   : "translate-x-0 opacity-100"
               )}
             >
-              Divide.ai
+              Viaje.ai
             </h1>
           </Link>
         </Button>

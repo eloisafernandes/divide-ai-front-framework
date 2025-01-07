@@ -1,10 +1,11 @@
-import { createChat, getPredictionByUser } from "@/services/AIPredictionService";
+import { IAIPredictionRequest } from "@/interfaces/IAIPrediction";
+import { createChat, getPredictionByUserAndGroupId } from "@/services/AIPredictionService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
   
-export function useAIPredictionData() {
+export function useAIPredictionData(groupId: number) {
     const query = useQuery({
-        queryFn:  getPredictionByUser,
-        queryKey: ["prediction-data"],
+        queryFn: () => getPredictionByUserAndGroupId(groupId),
+        queryKey: ["prediction-data", groupId],
     });
 
     return query;
