@@ -144,7 +144,7 @@ export function AIPrediction() {
           <Skeleton className="h-20 w-full" />
         </div>
       ) : data === null ? (
-        <Alert message="Nenhuma previsão disponível, selecine alguma ou outra viagem." type="info" showIcon />
+        <Alert message="Nenhuma previsão disponível, selecione alguma viagem." type="info" showIcon />
       ) : (
         response && (
           <div className="space-y-4">
