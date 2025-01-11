@@ -25,7 +25,7 @@ export function DrawerEditTrip({ isOpen, onClose, initialGroup }: DrawerEditTrip
       name: group.name,
       description: group.description,
       createdBy: group.createdBy?.id,
-      finalOccurrenceDate: new Date(`${group.finalOccurrenceDate}T00:00:00`),
+      endDate: new Date(`${group.endDate}T00:00:00`),
       destination: group.destination,
       startDate: new Date(`${group.startDate}T00:00:00`),
     };

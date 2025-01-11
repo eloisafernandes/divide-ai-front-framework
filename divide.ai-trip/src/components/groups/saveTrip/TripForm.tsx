@@ -23,20 +23,20 @@ interface TripFormProps {
 export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
   const [form] = Form.useForm();
   const [startDate, setStartDate] = useState<Date | null>(null);
-  const [finalOccurrenceDate, setEndDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   const formattedStartDate = startDate
     ? format(startDate, "PPP", { locale: ptBR })
     : "Escolha uma data";
-  const formattedEndDate = finalOccurrenceDate
-    ? format(finalOccurrenceDate, "PPP", { locale: ptBR })
+  const formattedEndDate = endDate
+    ? format(endDate, "PPP", { locale: ptBR })
     : "Escolha uma data";
 
   useEffect(() => {
     if (initialData) {
       form.setFieldsValue(initialData);
       setStartDate(initialData.startDate || null);
-      setEndDate(initialData.finalOccurrenceDate || null); 
+      setEndDate(initialData.endDate || null); 
     }
   }, [initialData, form]);
 
@@ -58,7 +58,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
   const handleEndDateSelect = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
     setEndDate(selectedDate);
-    form.setFieldsValue({ finalOccurrenceDate: selectedDate });
+    form.setFieldsValue({ endDate: selectedDate });
   };
 
   return (
@@ -72,7 +72,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
         description: "",
         destination: "",
         startDate: null,
-        finalOccurrenceDate: null, 
+        endDate: null, 
       }}
     >
       <Label htmlFor="name" className="font-medium">
@@ -142,11 +142,11 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
       </Form.Item>
 
       {/* Data Final */}
-      <Label htmlFor="finalOccurrenceDate" className="font-medium">
+      <Label htmlFor="endDate" className="font-medium">
         Data Final
       </Label>
       <Form.Item
-        name="finalOccurrenceDate"
+        name="endDate"
         className="text-primary m-0 mt-1 mb-2"
         rules={[{ required: true, message: "Por favor, insira a data final!" }]}
       >
@@ -156,7 +156,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
               variant={"outline"}
               className={cn(
                 "w-full justify-start text-left font-normal",
-                !finalOccurrenceDate && "text-muted-foreground"
+                !endDate && "text-muted-foreground"
               )}
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
@@ -166,7 +166,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
           <PopoverContent className="w-full p-0" align="start">
             <Calendar
               mode="single"
-              selected={finalOccurrenceDate || undefined}
+              selected={endDate || undefined}
               onSelect={handleEndDateSelect}
               locale={ptBR}
               initialFocus
