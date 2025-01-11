@@ -22,11 +22,11 @@ interface TripFormProps {
 
 export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
   const [form] = Form.useForm();
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [occurrenceDate, setoccurrenceDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  const formattedStartDate = startDate
-    ? format(startDate, "PPP", { locale: ptBR })
+  const formattedStartDate = occurrenceDate
+    ? format(occurrenceDate, "PPP", { locale: ptBR })
     : "Escolha uma data";
   const formattedEndDate = endDate
     ? format(endDate, "PPP", { locale: ptBR })
@@ -35,7 +35,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
   useEffect(() => {
     if (initialData) {
       form.setFieldsValue(initialData);
-      setStartDate(initialData.startDate || null);
+      setoccurrenceDate(initialData.occurrenceDate || null);
       setEndDate(initialData.endDate || null); 
     }
   }, [initialData, form]);
@@ -51,8 +51,8 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
 
   const handleStartDateSelect = (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
-    setStartDate(selectedDate);
-    form.setFieldsValue({ startDate: selectedDate });
+    setoccurrenceDate(selectedDate);
+    form.setFieldsValue({ occurrenceDate: selectedDate });
   };
 
   const handleEndDateSelect = (selectedDate: Date | undefined) => {
@@ -71,7 +71,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
         name: "",
         description: "",
         destination: "",
-        startDate: null,
+        occurrenceDate: null,
         endDate: null, 
       }}
     >
@@ -108,11 +108,11 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
       </Form.Item>
 
       {/* Data Inicial */}
-      <Label htmlFor="startDate" className="font-medium">
+      <Label htmlFor="occurrenceDate" className="font-medium">
         Data Inicial
       </Label>
       <Form.Item
-        name="startDate"
+        name="occurrenceDate"
         className="text-primary m-0 mt-1 mb-2"
         rules={[{ required: true, message: "Por favor, insira a data inicial!" }]}
       >
@@ -122,7 +122,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
               variant={"outline"}
               className={cn(
                 "w-full justify-start text-left font-normal",
-                !startDate && "text-muted-foreground"
+                !occurrenceDate && "text-muted-foreground"
               )}
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
@@ -132,7 +132,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
           <PopoverContent className="w-full p-0" align="start">
             <Calendar
               mode="single"
-              selected={startDate || undefined}
+              selected={occurrenceDate || undefined}
               onSelect={handleStartDateSelect}
               locale={ptBR}
               initialFocus

@@ -52,7 +52,7 @@ export function TripCard({ trip }: TripCardProps) {
             {trip.description}
           </CardDescription>
           <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
-            De {formatDate(trip.startDate)} até {formatDate(trip.endDate)}
+            De {formatDate(trip.occurrenceDate)} até {formatDate(trip.endDate)}
           </CardDescription>
         </div>
         <div onClick={handleClick}>
