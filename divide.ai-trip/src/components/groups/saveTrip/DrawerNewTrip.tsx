@@ -45,7 +45,7 @@ export function DrawerNewTrip() {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen} onClose={handleClose}>
       <DrawerTrigger asChild onClick={() => setIsOpen(true)}>
-        <Button variant="divideDark">Novo grupo de Viagem</Button>
+        <Button variant="divideDark">Novo grupo de viagem</Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-lg flex flex-col justify-center">

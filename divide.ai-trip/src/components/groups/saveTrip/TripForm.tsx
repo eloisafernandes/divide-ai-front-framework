@@ -76,7 +76,7 @@ export function TripForm({ initialData, onSubmit, isLoading }: TripFormProps) {
       }}
     >
       <Label htmlFor="name" className="font-medium">
-        Nome do grupo de Viagem
+        Nome
       </Label>
       <Form.Item
         name="name"
