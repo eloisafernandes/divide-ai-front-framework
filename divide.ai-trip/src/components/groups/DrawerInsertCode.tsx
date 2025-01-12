@@ -49,12 +49,12 @@ export function DrawerInsertCode() {
     return (
         <Drawer open={isOpen} onOpenChange={setIsOpen} onClose={handleClose}>
             <DrawerTrigger asChild>
-                <Button variant="link">Entrar em grupo de viagem</Button>
+                <Button variant="link">Entrar em grupo</Button>
             </DrawerTrigger>
             <DrawerContent>
                 <div className="mx-auto w-full max-w-lg">
                     <DrawerHeader>
-                        <DrawerTitle>Entrar em um grupo de viagem</DrawerTitle>
+                        <DrawerTitle>Entrar em grupo</DrawerTitle>
                         <DrawerDescription>
                             Forneça o código do grupo de viagem e aproveite!
                         </DrawerDescription>
