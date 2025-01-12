@@ -1,5 +1,5 @@
 import { GroupCard } from "@/components/groups/listGroup/GroupCard";
-import { IGroup } from "@/interfaces/IGroup";
+import { IGroup, IReform } from "@/interfaces/IGroup";
 import { SheetMenu } from "@/components/global/sidebar/SheetMenu";
 import { DrawerInsertCode } from "@/components/groups/DrawerInsertCode";
 import { DrawerNewGroup } from "@/components/groups/saveGroup/DrawerNewGroup";
@@ -12,8 +12,8 @@ export function Groups() {
   const { data } = useGroupDataByUser();
   const navigate = useNavigate();
 
-  const handleGroupClick = (group: IGroup) => {
-    navigate(`/grupos/${group.id}`);
+  const handleGroupClick = (group: IReform) => {
+    navigate(`/reformas/${group.id}`);
   };
 
   return (
@@ -21,7 +21,7 @@ export function Groups() {
       {/* Sidebar mobile */}
       <SheetMenu />
       <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
-        <h2 className="text-3xl font-bold tracking-tight">Gerenciar grupos</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Gerenciar reformas</h2>
         <div className="flex items-center space-x-2">
           <DrawerNewGroup />
           <DrawerInsertCode />
@@ -29,7 +29,7 @@ export function Groups() {
       </div>
       
       {/* Lista de Grupos */}
-      {Array.isArray(data) && data.map((groupCard: IGroup) => (
+      {Array.isArray(data) && data.map((groupCard: IReform) => (
         <div key={groupCard.id} onClick={() => handleGroupClick(groupCard)}>
           <GroupCard group={groupCard} />
         </div>

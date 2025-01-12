@@ -5,7 +5,8 @@ import {
   ArrowRightLeft,
   LayoutGrid,
   LucideIcon,
-  CircleDollarSign
+  CircleDollarSign,
+  Hammer
 } from "lucide-react";
 
 type Submenu = {
@@ -63,13 +64,13 @@ export function getMenuList(pathname: string): Group[] {
       ]
     },
     {
-      groupLabel: "Controle grupo",
+      groupLabel: "Controle reforma",
       menus: [
         {
-          href: "/grupos",
-          label: "Grupos",
-          active: pathname.includes("/grupos"),
-          icon: Users
+          href: "/reformas",
+          label: "Reformas",
+          active: pathname.includes("/reformas"),
+          icon: Hammer
         },
       ]
     },
