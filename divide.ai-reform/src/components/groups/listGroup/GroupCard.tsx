@@ -1,11 +1,19 @@
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../../ui/card";
 import { GroupAvatars } from "./GroupAvatars";
 import { GroupOptions } from "./GroupOptions";
-import { IGroup } from "@/interfaces/IGroup";
+import { IGroup, IReform, ReformPriority } from "@/interfaces/IGroup";
+import { formatDate } from "@/utils/Formatter";
 
 interface GroupCardProps {
-  group: IGroup;
+  group: IReform;
 }
+
+const priorityColors: { [key in ReformPriority]: string } = {
+  Urgente: "bg-red-100 text-red-800",
+  Alta: "bg-orange-100 text-orange-800",
+  Média: "bg-yellow-100 text-yellow-800",
+  Baixa: "bg-green-100 text-green-800",
+};
 
 export function GroupCard({ group }: GroupCardProps) {
   const handleClick = (event: React.MouseEvent) => {
@@ -27,6 +35,13 @@ export function GroupCard({ group }: GroupCardProps) {
               >
                 {group.name}
               </span>
+              <span
+                className={`inline-block px-3 py-1 rounded-full text-lg font-medium mb-4 ml-2 ${
+                  priorityColors[group.priority as ReformPriority]
+                }`}
+              >
+                {group.priority}
+              </span>
               {group.discontinued && (
                 <span
                   className="inline-block bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))]
@@ -39,8 +54,17 @@ export function GroupCard({ group }: GroupCardProps) {
           <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
             Criado por: {group.createdBy.firstName} {group.createdBy.lastName}
           </CardDescription>
-          <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
+          <CardDescription className="text-sm text-[hsl(var(--muted-foreground))] mb-4">
             {group.description}
+          </CardDescription>
+          <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
+            Local: {group.local}
+          </CardDescription>
+          <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
+            Área: {group.area} (m²)
+          </CardDescription>
+          <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
+            Inicia em {formatDate(group.occurrenceDate)}
           </CardDescription>
         </div>
         <div onClick={handleClick}>

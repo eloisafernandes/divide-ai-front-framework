@@ -41,11 +41,11 @@ export const router = createBrowserRouter([
         element: <Element children={<HomePage />} />,
       },
       {
-        path: "/grupos",
+        path: "/reformas",
         element: <Element children={<Groups />} />,
       },
       {
-        path: "/grupos/:id",
+        path: "/reformas/:id",
         element: <Element children={<GroupDetails />} />, 
       },
       {

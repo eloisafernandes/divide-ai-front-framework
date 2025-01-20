@@ -1,13 +1,13 @@
 import { api } from '@/services/api';
 import { getUserLocalStorage } from '@/context/AuthProvider/util';
-import { IGroup, IGroupForm, IJoinGroup } from '@/interfaces/IGroup';
+import { IGroup, IGroupForm, IJoinGroup, IReform, IReformForm } from '@/interfaces/IGroup';
 import { ErrorResponse, ApiResponse } from '@/interfaces/IResponse';
 
-export async function getAllGroupsByUser(): Promise<IGroup[] | null> {
+export async function getAllGroupsByUser(): Promise<IReform[] | null> {
     try {
       const token = getUserLocalStorage()?.token;
       const id = getUserLocalStorage()?.id;
-      const response = await api.get<ApiResponse<IGroup[]>>(`/groups/user/${id}`, {
+      const response = await api.get<ApiResponse<IReform[]>>(`/reforms/user/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
   
@@ -19,15 +19,15 @@ export async function getAllGroupsByUser(): Promise<IGroup[] | null> {
         if (errorResponse && errorResponse.error?.message) {
           throw new Error(errorResponse.error?.message); 
         } else {
-          throw new Error('Erro desconhecido ao entrar no grupo'); 
+          throw new Error('Erro desconhecido ao entrar no grupo de reforma'); 
         }
     }
 }
   
-export async function getGroupById(id: number): Promise<IGroup | null> {
+export async function getGroupById(id: number): Promise<IReform | null> {
     try {
         const token = getUserLocalStorage()?.token;
-        const response = await api.get<ApiResponse<IGroup>>(`/groups/${id}`, {
+        const response = await api.get<ApiResponse<IReform>>(`/reforms/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -39,16 +39,16 @@ export async function getGroupById(id: number): Promise<IGroup | null> {
       if (errorResponse && errorResponse.error?.message) {
         throw new Error(errorResponse.error?.message); 
       } else {
-        throw new Error('Erro desconhecido ao buscar o grupo'); 
+        throw new Error('Erro desconhecido ao buscar reforma'); 
       }
     }
 }
 
 
-export async function createGroup(group: IGroupForm): Promise<IGroup | null> {
+export async function createGroup(group: IReformForm): Promise<IReform | null> {
     try {
         const token = getUserLocalStorage()?.token;
-        const response = await api.post<ApiResponse<IGroup>>(`/groups`, group, {
+        const response = await api.post<ApiResponse<IReform>>(`/reforms`, group, {
         headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -60,15 +60,15 @@ export async function createGroup(group: IGroupForm): Promise<IGroup | null> {
       if (errorResponse && errorResponse.error?.message) {
         throw new Error(errorResponse.error?.message); 
       } else {
-        throw new Error('Erro desconhecido ao criar grupo'); 
+        throw new Error('Erro desconhecido ao criar reforma'); 
       }
     }
 }
 
-export async function updateGroup(group: IGroupForm): Promise<IGroup | null> {
+export async function updateGroup(group: IReformForm): Promise<IReform | null> {
     try {
         const token = getUserLocalStorage()?.token;
-        const response = await api.put<ApiResponse<IGroup>>(`/groups/${group.id}`, group, {
+        const response = await api.put<ApiResponse<IReform>>(`/reforms/${group.id}`, group, {
         headers: { 'Authorization': `Bearer ${token}`, }
         });
 
@@ -80,16 +80,16 @@ export async function updateGroup(group: IGroupForm): Promise<IGroup | null> {
       if (errorResponse && errorResponse.error?.message) {
         throw new Error(errorResponse.error?.message); 
       } else {
-        throw new Error('Erro desconhecido ao atualizar no grupo'); 
+        throw new Error('Erro desconhecido ao atualizar reforma'); 
       }
     }
 }
 
-export async function joinGroup(joinGroup: IJoinGroup): Promise<IGroup | null> {
+export async function joinGroup(joinGroup: IJoinGroup): Promise<IReform | null> {
     try {
         const token = getUserLocalStorage()?.token;
 
-        const response = await api.post<ApiResponse<IGroup>>(`/groups/join`, joinGroup, {
+        const response = await api.post<ApiResponse<IReform>>(`/reforms/join`, joinGroup, {
         headers: { 'Authorization': `Bearer ${token}` },
         });
 
@@ -103,7 +103,7 @@ export async function joinGroup(joinGroup: IJoinGroup): Promise<IGroup | null> {
         if (errorResponse && errorResponse.error?.message) {
           throw new Error(errorResponse.error?.message); 
         } else {
-          throw new Error('Erro desconhecido ao entrar no grupo'); 
+          throw new Error('Erro desconhecido ao entrar no grupo de reforma'); 
         }
     }
 }
@@ -111,7 +111,7 @@ export async function joinGroup(joinGroup: IJoinGroup): Promise<IGroup | null> {
 export async function deleteGroup(id: number): Promise<void | null> {
     try {
       const token = getUserLocalStorage()?.token;
-      const response = await api.delete<ApiResponse<null>>(`/groups/${id}`, {
+      const response = await api.delete<ApiResponse<null>>(`/reforms/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
   
@@ -123,7 +123,7 @@ export async function deleteGroup(id: number): Promise<void | null> {
         if (errorResponse && errorResponse.error?.message) {
           throw new Error(errorResponse.error?.message); 
         } else {
-          throw new Error('Erro desconhecido ao deletar grupo'); 
+          throw new Error('Erro desconhecido ao deletar reforma'); 
         }
     }
 }
@@ -131,7 +131,7 @@ export async function deleteGroup(id: number): Promise<void | null> {
 export async function leaveGroup(groupId: number, userId: number): Promise<void | null> {
     try {
       const token = getUserLocalStorage()?.token;
-      const response = await api.delete<ApiResponse<null>>(`/groups/${groupId}/user/${userId}/leave`, {
+      const response = await api.delete<ApiResponse<null>>(`/reforms/${groupId}/user/${userId}/leave`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
   
@@ -143,7 +143,7 @@ export async function leaveGroup(groupId: number, userId: number): Promise<void 
         if (errorResponse && errorResponse.error?.message) {
           throw new Error(errorResponse.error?.message); 
         } else {
-          throw new Error('Erro desconhecido ao sair do grupo'); 
+          throw new Error('Erro desconhecido ao sair do grupo de reforma'); 
         }
     }
 }
@@ -151,7 +151,7 @@ export async function leaveGroup(groupId: number, userId: number): Promise<void 
 export async function deleteMember(groupId: number, userId: number): Promise<void | null> {
   try {
     const token = getUserLocalStorage()?.token;
-    const response = await api.delete<ApiResponse<null>>(`/groups/${groupId}/user/${userId}/delete`, {
+    const response = await api.delete<ApiResponse<null>>(`/reforms/${groupId}/user/${userId}/delete`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
 
@@ -163,7 +163,7 @@ export async function deleteMember(groupId: number, userId: number): Promise<voi
       if (errorResponse && errorResponse.error?.message) {
         throw new Error(errorResponse.error?.message); 
       } else {
-        throw new Error('Erro desconhecido ao deletar membro do grupo'); 
+        throw new Error('Erro desconhecido ao deletar membro do grupo de reforma'); 
       }
   }
 }

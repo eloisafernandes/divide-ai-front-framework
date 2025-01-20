@@ -17,7 +17,7 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { IGroup } from "@/interfaces/IGroup";
+import { IGroup, IReform } from "@/interfaces/IGroup";
 import { getUserLocalStorage } from "@/context/AuthProvider/util";
 import { useGroupDelete, useGroupLeave } from "@/hooks/group/groupHook";
 import {
@@ -31,7 +31,7 @@ import {
 import { message } from "antd";
 
 interface GroupOptionsProps {
-  group: IGroup;
+  group: IReform;
 }
 
 export function GroupOptions({ group }: GroupOptionsProps) {
@@ -65,7 +65,7 @@ export function GroupOptions({ group }: GroupOptionsProps) {
   const handleDelete = () => {
     deleteGroup(group.id!, {
       onSuccess: () => {
-        message.success('Grupo removido com sucesso!');
+        message.success('Reforma removida com sucesso!');
         setIsDeleteDialogOpen(false);
       },
       onError: (error: any) => {
@@ -77,7 +77,7 @@ export function GroupOptions({ group }: GroupOptionsProps) {
   const handleLeave = () => {
     leaveGroup(undefined, {
       onSuccess: () => {
-        message.success('Você saiu do grupo com sucesso!');
+        message.success('Você saiu do grupo de reforma com sucesso!');
         setIsLeaveDialogOpen(false);
       },
       onError: (error: any) => {
@@ -130,7 +130,7 @@ export function GroupOptions({ group }: GroupOptionsProps) {
             </div>
           </DrawerTrigger>
           <DrawerContent ref={drawerRef} className="flex justify-center items-center">
-            <DialogTitle className="sr-only">Opções do Grupo</DialogTitle>
+            <DialogTitle className="sr-only">Opções da Reforma</DialogTitle>
             <div className="flex flex-col space-y-4 p-4 w-1/2 max-w-md mx-auto">
               {isCreator && (
                 <Button
@@ -194,7 +194,7 @@ export function GroupOptions({ group }: GroupOptionsProps) {
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Você tem certeza de que deseja deletar o grupo?</DialogTitle>
+            <DialogTitle>Você tem certeza de que deseja deletar a reforma?</DialogTitle>
             <DialogDescription>
               Esta ação não pode ser desfeita.
             </DialogDescription>
@@ -214,7 +214,7 @@ export function GroupOptions({ group }: GroupOptionsProps) {
       <Dialog open={isLeaveDialogOpen} onOpenChange={setIsLeaveDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Você tem certeza de que deseja sair do grupo?</DialogTitle>
+            <DialogTitle>Você tem certeza de que deseja sair do grupo de reforma?</DialogTitle>
             <DialogDescription>
               Você não poderá mais acessar este grupo após sair.
             </DialogDescription>

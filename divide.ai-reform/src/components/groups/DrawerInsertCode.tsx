@@ -38,7 +38,7 @@ export function DrawerInsertCode() {
                 onSuccess: () => {
                     setIsOpen(false); 
                     form.resetFields();
-                    message.success('Você entrou no grupo com sucesso!');
+                    message.success('Você entrou no grupo de reforma com sucesso!');
                 },
                 onError: (error: any) => {
                     message.error(error.message);
@@ -54,7 +54,7 @@ export function DrawerInsertCode() {
             <DrawerContent>
                 <div className="mx-auto w-full max-w-lg">
                     <DrawerHeader>
-                        <DrawerTitle>Entrar em um grupo</DrawerTitle>
+                        <DrawerTitle>Entrar em grupo de reforma</DrawerTitle>
                         <DrawerDescription>
                             Forneça o código do grupo e aproveite!
                         </DrawerDescription>
@@ -68,7 +68,7 @@ export function DrawerInsertCode() {
                             <Form.Item
                                 name="code"
                                 className="text-primary m-0 mt-2"
-                                rules={[{ required: true, message: 'Por favor, insira o código do grupo!' }]}
+                                rules={[{ required: true, message: 'Por favor, insira o código do grupo de reforma!' }]}
                             >
                                 <Input id="code" />
                             </Form.Item>

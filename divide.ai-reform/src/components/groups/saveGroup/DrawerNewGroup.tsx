@@ -8,7 +8,7 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { IGroupForm } from "@/interfaces/IGroup";
+import { IGroupForm, IReformForm } from "@/interfaces/IGroup";
 import { message } from "antd";
 import { GroupForm } from "./GroupForm";
 import { DialogCode } from "../DialogCode";
@@ -25,13 +25,13 @@ export function DrawerNewGroup() {
     setIsOpen(false);
   };
 
-  const handleGroupSave = (values: IGroupForm) => {
+  const handleGroupSave = (values: IReformForm) => {
     createGroup(values, {
       onSuccess: (data) => {
         if (data) {
           setGroupCode(data.code); 
           setIsDialogOpen(true);
-          message.success("Grupo criado com sucesso!");
+          message.success("Reforma criada com sucesso!");
           setIsOpen(false);
         }
       },
@@ -44,13 +44,13 @@ export function DrawerNewGroup() {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen} onClose={handleClose}>
       <DrawerTrigger asChild onClick={() => setIsOpen(true)}>
-        <Button variant="divideDark">Novo grupo</Button>
+        <Button variant="divideDark">Nova reforma</Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-lg flex flex-col justify-center">
           <DrawerHeader>
-            <DrawerTitle>Criar novo grupo</DrawerTitle>
-            <DrawerDescription>Preencha os detalhes para criar um novo grupo.</DrawerDescription>
+            <DrawerTitle>Criar nova reforma</DrawerTitle>
+            <DrawerDescription>Preencha os detalhes para criar uma nova reforma.</DrawerDescription>
             <GroupForm onSubmit={handleGroupSave} isLoading={isPending} /> 
           </DrawerHeader>
         </div>
