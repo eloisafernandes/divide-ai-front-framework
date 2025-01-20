@@ -5,35 +5,38 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { IGroup, IGroupForm } from "@/interfaces/IGroup";
+import { ITrip, ITripForm } from "@/interfaces/IGroup";
 import { message } from "antd";
-import { GroupForm } from "./GroupForm";
-import { useGroupUpdate } from "@/hooks/group/groupHook";
+import { TripForm } from "./TripForm";
+import { useTripUpdate } from "@/hooks/trip/tripHook";
 
-interface DrawerEditGroupProps {
+interface DrawerEditTripProps {
   isOpen: boolean;
   onClose: () => void;
-  initialGroup: IGroup;
+  initialGroup: ITrip;
 }
 
-export function DrawerEditGroup({ isOpen, onClose, initialGroup }: DrawerEditGroupProps) {
-  const { mutate: updateGroup, isPending } = useGroupUpdate();
+export function DrawerEditTrip({ isOpen, onClose, initialGroup }: DrawerEditTripProps) {
+  const { mutate: updateTrip, isPending } = useTripUpdate();
 
-  const mapInitialGroupToFormValues = (group: IGroup): IGroupForm => {
+  const mapInitialGroupToFormValues = (group: ITrip): ITripForm => {
     return {
       id: group.id,
       name: group.name,
       description: group.description,
       createdBy: group.createdBy?.id,
+      endDate: new Date(group.endDate),
+      destination: group.destination,
+      occurrenceDate: new Date(group.occurrenceDate),
     };
   };
 
-  const handleGroupSave = (values: IGroupForm) => {
-    updateGroup(
+  const handleGroupSave = (values: ITripForm) => {
+    updateTrip(
       { ...values, id: initialGroup.id },
       {
         onSuccess: () => {
-          message.success("Grupo editado com sucesso!");
+          message.success("Viagem editada com sucesso!");
           onClose();
         },
         onError: (error: any) => {
@@ -48,9 +51,9 @@ export function DrawerEditGroup({ isOpen, onClose, initialGroup }: DrawerEditGro
       <DrawerContent>
         <div className="mx-auto w-full max-w-lg">
           <DrawerHeader>
-            <DrawerTitle>Editar Grupo</DrawerTitle>
-            <DrawerDescription>Atualize as informações do grupo abaixo.</DrawerDescription>
-            <GroupForm
+            <DrawerTitle>Editar Viagem</DrawerTitle>
+            <DrawerDescription>Atualize as informações da viagem abaixo.</DrawerDescription>
+            <TripForm
               initialData={mapInitialGroupToFormValues(initialGroup)}
               onSubmit={handleGroupSave}
               isLoading={isPending}

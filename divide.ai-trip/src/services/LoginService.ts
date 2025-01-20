@@ -1,7 +1,7 @@
 import { api } from '@/services/api';
 import { ILogin, IUserRegister } from '@/interfaces/IUser';
-import { ApiResponse } from '@/interfaces/ICategory';
 import { User } from '@/types/User';
+import { ApiResponse } from '@/interfaces/ApiResponse';
 
 /**
  * Sends a login request to the server.

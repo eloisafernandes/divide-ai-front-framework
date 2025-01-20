@@ -38,7 +38,7 @@ export function LoginForm() {
     return (
         <div className="bg-[#fff]  shadow-xl w-5/12 h-[573px] flex flex-col items-center justify-center max-lg:h-full max-lg:w-full">
             <h1 className=" w-5/12 mb-[20px] text-center text-[60px] text-[#29756F] font-medium  max-md:mb-[10px] max-md:w-6/12 ">
-                Divide.<span className="text-[#8D8D8D] font-bold">ai</span>
+                Viaje.<span className="text-[#8D8D8D] font-bold">ai</span>
             </h1>
             <form className="w-full flex flex-col items-center justify-center" onSubmit={handleSubmit}>
                 <input

@@ -8,6 +8,12 @@ export interface IGroup {
     members: IUserResponse[];
     code: string;
     discontinued?: boolean;
+    occurrenceDate: Date;
+}
+
+export interface ITrip extends IGroup {
+    destination: string;
+    endDate: Date;
 }
 
 export interface IGroupForm {
@@ -15,6 +21,12 @@ export interface IGroupForm {
     name: string;
     description: string;
     createdBy?: number;
+    occurrenceDate: Date;
+}
+
+export interface ITripForm extends IGroupForm {
+    destination: string;
+    endDate: Date;
 }
 
 export interface IJoinGroup {

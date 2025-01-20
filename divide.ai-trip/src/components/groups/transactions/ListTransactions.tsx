@@ -1,6 +1,6 @@
-import { useGroupTransactionDelete, useGroupTransactions } from "@/hooks/group/UseGroupTransactions";
+import { useGroupTransactionDelete, useGroupTransactions } from "@/hooks/trip/UseGroupTransactions";
 import { formatMoney, formatDate, truncateText } from "@/utils/Formatter";
-import { GroupAvatars } from "../listGroup/GroupAvatars";
+import { GroupAvatars } from "../listTrip/GroupAvatars";
 import { useMediaQuery } from 'react-responsive';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { EllipsisVertical } from "lucide-react";

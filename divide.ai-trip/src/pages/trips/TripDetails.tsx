@@ -1,20 +1,20 @@
-import { useGroupDataById } from '@/hooks/group/groupHook';
+import { useTripDataById } from '@/hooks/trip/tripHook';
 import { useParams } from 'react-router-dom';
 import { SheetMenu } from "@/components/global/sidebar/SheetMenu";
 import { DialogCode } from '@/components/groups/DialogCode';
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { TabGroup } from '@/components/groups/TabGroup';
+import { TabTrip } from '@/components/groups/TabTrip';
 
-export function GroupDetails() {
+export function TripDetails() {
   const { id } = useParams();
-  const groupId = Number(id);
-  const { data: group } = useGroupDataById(groupId); 
+  const tripId = Number(id);
+  const { data: trip } = useTripDataById(tripId); 
   const [isDialogOpen, setIsDialogOpen] = useState(false); 
 
-  if (!group) {
-    return <div>Grupo não encontrado.</div>;
+  if (!trip) {
+    return <div>Viagem não encontrada.</div>;
   }
 
   const handleDialogOpen = () => setIsDialogOpen(true); 
@@ -24,21 +24,21 @@ export function GroupDetails() {
       {/* Sidebar mobile */}
       <SheetMenu />
 			<div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">{group.name}</h2> 
+        <h2 className="text-3xl font-bold tracking-tight">{trip.name}</h2> 
         <div className="flex items-center space-x-2">
-          {!group.discontinued &&
+          {!trip.discontinued &&
             <Button variant="divideDark" onClick={handleDialogOpen}>
               Obter código
             </Button>
           }
           <DialogCode
             isOpen={isDialogOpen}
-            groupCode={group.code}
+            groupCode={trip.code}
             onClose={() => setIsDialogOpen(false)}
           />
         </div>
       </div>
-      <TabGroup group={group}/>
+      <TabTrip trip={trip}/>
     </div>
   );
 }

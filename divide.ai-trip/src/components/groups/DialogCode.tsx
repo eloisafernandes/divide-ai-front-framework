@@ -27,7 +27,7 @@ export function DialogCode({ isOpen, groupCode, onClose }: DialogCodeProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
-        <DialogTitle>Código do grupo</DialogTitle>
+        <DialogTitle>Código da viagem</DialogTitle>
         <DialogDescription>
           Compartilhe o código abaixo para convidar seus amigos.
         </DialogDescription>

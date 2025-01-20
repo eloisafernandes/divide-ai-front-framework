@@ -5,7 +5,8 @@ import {
   ArrowRightLeft,
   LayoutGrid,
   LucideIcon,
-  CircleDollarSign
+  CircleDollarSign,
+  MapPinned
 } from "lucide-react";
 
 type Submenu = {
@@ -63,13 +64,13 @@ export function getMenuList(pathname: string): Group[] {
       ]
     },
     {
-      groupLabel: "Controle grupo",
+      groupLabel: "Controle viagens",
       menus: [
         {
-          href: "/grupos",
-          label: "Grupos",
-          active: pathname.includes("/grupos"),
-          icon: Users
+          href: "/viagens",
+          label: "Viagens",
+          active: pathname.includes("/viagens"),
+          icon: MapPinned
         },
       ]
     },

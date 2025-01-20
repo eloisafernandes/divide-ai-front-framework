@@ -1,13 +1,14 @@
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../../ui/card";
 import { GroupAvatars } from "./GroupAvatars";
-import { GroupOptions } from "./GroupOptions";
-import { IGroup } from "@/interfaces/IGroup";
+import { TripOptions } from "./TripOptions";
+import { ITrip } from "@/interfaces/IGroup";
+import { formatDate } from "@/utils/Formatter";
 
-interface GroupCardProps {
-  group: IGroup;
+interface TripCardProps {
+  trip: ITrip;
 }
 
-export function GroupCard({ group }: GroupCardProps) {
+export function TripCard({ trip }: TripCardProps) {
   const handleClick = (event: React.MouseEvent) => {
     event.stopPropagation(); 
   };
@@ -25,9 +26,17 @@ export function GroupCard({ group }: GroupCardProps) {
                 className="inline-block bg-[#E9F3F2] text-[#438883] 
                           px-3 py-1 rounded-full text-lg font-medium mb-4"
               >
-                {group.name}
+                {trip.name}
               </span>
-              {group.discontinued && (
+
+              <span
+                className="inline-block bg-[#E9F3F2] text-[#438883] 
+                          px-3 py-1 rounded-full text-lg font-medium mb-4 ml-2"
+              >
+                {trip.destination}
+              </span>
+              
+              {trip.discontinued && (
                 <span
                   className="inline-block bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))]
                             px-3 py-1 rounded-full text-lg font-medium mb-4 ml-2"
@@ -37,19 +46,22 @@ export function GroupCard({ group }: GroupCardProps) {
               )}
           </CardTitle>
           <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
-            Criado por: {group.createdBy.firstName} {group.createdBy.lastName}
+            Criado por: {trip.createdBy.firstName} {trip.createdBy.lastName}
+          </CardDescription>
+          <CardDescription className="text-sm text-[hsl(var(--muted-foreground))] mb-4">
+            {trip.description}
           </CardDescription>
           <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
-            {group.description}
+            De {formatDate(trip.occurrenceDate)} até {formatDate(trip.endDate)}
           </CardDescription>
         </div>
         <div onClick={handleClick}>
-          <GroupOptions group={group} />
+          <TripOptions trip={trip} />
         </div>
       </CardHeader>
 
       <CardFooter>
-        <GroupAvatars users={group.members} />
+        <GroupAvatars users={trip.members} />
       </CardFooter>
     </Card>
   );
