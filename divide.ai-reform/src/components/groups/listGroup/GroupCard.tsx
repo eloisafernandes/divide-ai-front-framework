@@ -61,6 +61,9 @@ export function GroupCard({ group }: GroupCardProps) {
             Local: {group.local}
           </CardDescription>
           <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
+            Área: {group.area} (m²)
+          </CardDescription>
+          <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
             Inicia em {formatDate(group.occurrenceDate)}
           </CardDescription>
         </div>
