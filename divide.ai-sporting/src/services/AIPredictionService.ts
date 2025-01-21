@@ -1,14 +1,14 @@
 import { api } from '@/services/api';
-import { ICategory } from '@/interfaces/ICategory';
 import { getUserLocalStorage } from '@/context/AuthProvider/util';
 import { ErrorResponse, ApiResponse } from '@/interfaces/IResponse';
-import { IAIPrediction, IAIPredictionRequest } from '@/interfaces/IAIPrediction';
+import { ChatResponse, IAIPrediction, IAIPredictionRequest } from '@/interfaces/IAIPrediction';
 
-export async function getPredictionByUser(): Promise<IAIPrediction | null> {
+export async function getPredictionByUserAndGroupId(groupId: number): Promise<ChatResponse | null> {
   try {
     const token = getUserLocalStorage()?.token;
     const id = getUserLocalStorage()?.id;
-    const response = await api.get<ApiResponse<IAIPrediction>>(`/chat-completion/user/${id}`, {
+
+    const response = await api.get<ApiResponse<ChatResponse>>(`/sporting/chat-completion/user/${id}/group/${groupId}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
 
@@ -21,21 +21,21 @@ export async function getPredictionByUser(): Promise<IAIPrediction | null> {
 }
 
 export async function createChat(request: IAIPredictionRequest): Promise<IAIPrediction | null> {
-    try {
-      const token = getUserLocalStorage()?.token;
-      const response = await api.post<ApiResponse<IAIPrediction>>('/chat-completion', request, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-  
-      if (response.data.success) return response.data.data;
-      return null;
-    } catch (error: any) {
-      const errorResponse = error?.response?.data as ApiResponse<ErrorResponse>;
-  
-      if (errorResponse && errorResponse.error?.message) {
-        throw new Error(errorResponse.error?.message);
-      } else {
-        throw new Error('Erro desconhecido ao criar previsão');
-      }
+  try {
+    const token = getUserLocalStorage()?.token;
+    const response = await api.post<ApiResponse<IAIPrediction>>('/sporting/chat-completion', request, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (response.data.success) return response.data.data;
+    return null;
+  } catch (error: any) {
+    const errorResponse = error?.response?.data as ApiResponse<ErrorResponse>;
+
+    if (errorResponse && errorResponse.error?.message) {
+      throw new Error(errorResponse.error?.message);
+    } else {
+      throw new Error('Erro desconhecido ao criar previsão');
     }
   }
+}
