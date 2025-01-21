@@ -1,7 +1,8 @@
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../../ui/card";
 import { GroupAvatars } from "./GroupAvatars";
 import { GroupOptions } from "./GroupOptions";
-import { IGroup } from "@/interfaces/IGroup";
+import { IGroup,  SportingsModalities} from "@/interfaces/IGroup";
+import { formatDate } from "@/utils/Formatter";
 
 interface GroupCardProps {
   group: IGroup;
@@ -25,7 +26,7 @@ export function GroupCard({ group }: GroupCardProps) {
                 className="inline-block bg-[#E9F3F2] text-[#438883] 
                           px-3 py-1 rounded-full text-lg font-medium mb-4"
               >
-                {group.name}
+                {SportingsModalities[group.sportingsModalities] }
               </span>
               {group.discontinued && (
                 <span
@@ -41,6 +42,9 @@ export function GroupCard({ group }: GroupCardProps) {
           </CardDescription>
           <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
             {group.description}
+          </CardDescription>
+          <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
+            Iniciou em {formatDate(group.occurrenceDate)}
           </CardDescription>
         </div>
         <div onClick={handleClick}>

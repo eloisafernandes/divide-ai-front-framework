@@ -82,7 +82,7 @@ export function SaveModal({isOpen, onClose, groupId}: SaveModelProps) {
       createGroupTransaction(completeFormData, {
         onSuccess: (data) => {
           if (data) {
-            message.success("Despesa de grupo criada com sucesso!");
+            message.success("Despesa do evento criada com sucesso!");
             onClose();
           }
         },

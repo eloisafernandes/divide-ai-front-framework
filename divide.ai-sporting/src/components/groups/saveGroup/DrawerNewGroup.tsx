@@ -8,7 +8,7 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { IGroupForm } from "@/interfaces/IGroup";
+import { ISportingForm } from "@/interfaces/IGroup";
 import { message } from "antd";
 import { GroupForm } from "./GroupForm";
 import { DialogCode } from "../DialogCode";
@@ -25,7 +25,7 @@ export function DrawerNewGroup() {
     setIsOpen(false);
   };
 
-  const handleGroupSave = (values: IGroupForm) => {
+  const handleGroupSave = (values: ISportingForm) => {
     createGroup(values, {
       onSuccess: (data) => {
         if (data) {
@@ -44,13 +44,13 @@ export function DrawerNewGroup() {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen} onClose={handleClose}>
       <DrawerTrigger asChild onClick={() => setIsOpen(true)}>
-        <Button variant="divideDark">Novo grupo</Button>
+        <Button variant="divideDark">Novo Evento Esportivo</Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-lg flex flex-col justify-center">
           <DrawerHeader>
-            <DrawerTitle>Criar novo grupo</DrawerTitle>
-            <DrawerDescription>Preencha os detalhes para criar um novo grupo.</DrawerDescription>
+            <DrawerTitle>Criar novo evento esportivo</DrawerTitle>
+            <DrawerDescription>Preencha os detalhes para criar um novo evento esportivo.</DrawerDescription>
             <GroupForm onSubmit={handleGroupSave} isLoading={isPending} /> 
           </DrawerHeader>
         </div>
