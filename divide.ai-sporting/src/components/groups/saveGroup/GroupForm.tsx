@@ -14,6 +14,7 @@ import { getUserLocalStorage } from "@/context/AuthProvider/util";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CalendarIcon } from "@radix-ui/react-icons";
 
+
 interface GroupFormProps {
   initialData?: ISportingForm | null;
   onSubmit: (values: ISportingForm) => void;
@@ -58,20 +59,23 @@ export function GroupForm({ initialData, onSubmit, isLoading }: GroupFormProps) 
     ? format(occurrenceDate, "PPP", { locale: ptBR })
     : "Escolha uma data";
 
-  const mapModalitiesDescriptionToEnum = (
-    description: string
-  ): keyof typeof SportingsModalities | undefined => {
-    return Object.keys(SportingsModalities).find((key) => 
-      SportingsModalities[key as keyof typeof SportingsModalities] === description
-    ) as keyof typeof SportingsModalities | undefined;
-  };
-
+  // const mapModalitiesDescriptionToEnum = (
+  //   description: string
+  // ): keyof typeof SportingsModalities | undefined => {
+  //   console.log("inicial description: ", description);
+  //   return Object.keys(SportingsModalities).find((key) => 
+  //     SportingsModalities[key as keyof typeof SportingsModalities] === description
+  //   ) as keyof typeof SportingsModalities | undefined;
+  // };
+ 
   useEffect(() => {
     if (initialData) {
-      const modalityKey = mapModalitiesDescriptionToEnum(initialData.sportingsModalities);
+      // const modalityKey = mapModalitiesDescriptionToEnum(initialData.sportingsModalities);
+      // console.log("inicial modalidade: ", initialData.sportingsModalities);
       form.setFieldsValue({
         ...initialData,
-        sportingsModalities: modalityKey,
+        sportingsModalities: initialData.sportingsModalities,
+        // time: new Date(initialData.occurrenceDate),
       });
       setOccurrenceDate(initialData.occurrenceDate || null);
     }

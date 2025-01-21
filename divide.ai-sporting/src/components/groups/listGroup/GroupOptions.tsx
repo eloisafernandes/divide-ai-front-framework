@@ -17,7 +17,7 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { IGroup } from "@/interfaces/IGroup";
+import { IGroup, ISporting } from "@/interfaces/IGroup";
 import { getUserLocalStorage } from "@/context/AuthProvider/util";
 import { useGroupDelete, useGroupLeave } from "@/hooks/group/groupHook";
 import {
@@ -31,7 +31,7 @@ import {
 import { message } from "antd";
 
 interface GroupOptionsProps {
-  group: IGroup;
+  group: ISporting;
 }
 
 export function GroupOptions({ group }: GroupOptionsProps) {
@@ -130,7 +130,7 @@ export function GroupOptions({ group }: GroupOptionsProps) {
             </div>
           </DrawerTrigger>
           <DrawerContent ref={drawerRef} className="flex justify-center items-center">
-            <DialogTitle className="sr-only">Opções do Grupo</DialogTitle>
+            <DialogTitle className="sr-only">Opções de Eventos</DialogTitle>
             <div className="flex flex-col space-y-4 p-4 w-1/2 max-w-md mx-auto">
               {isCreator && (
                 <Button
@@ -194,7 +194,7 @@ export function GroupOptions({ group }: GroupOptionsProps) {
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Você tem certeza de que deseja deletar o grupo?</DialogTitle>
+            <DialogTitle>Você tem certeza de que deseja deletar o evento?</DialogTitle>
             <DialogDescription>
               Esta ação não pode ser desfeita.
             </DialogDescription>
@@ -214,9 +214,9 @@ export function GroupOptions({ group }: GroupOptionsProps) {
       <Dialog open={isLeaveDialogOpen} onOpenChange={setIsLeaveDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Você tem certeza de que deseja sair do grupo?</DialogTitle>
+            <DialogTitle>Você tem certeza de que deseja sair do evento?</DialogTitle>
             <DialogDescription>
-              Você não poderá mais acessar este grupo após sair.
+              Você não poderá mais acessar este evento após sair.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

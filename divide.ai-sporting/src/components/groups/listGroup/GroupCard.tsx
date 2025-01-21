@@ -1,11 +1,11 @@
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../../ui/card";
 import { GroupAvatars } from "./GroupAvatars";
 import { GroupOptions } from "./GroupOptions";
-import { IGroup,  SportingsModalities} from "@/interfaces/IGroup";
+import { IGroup,  ISporting,  SportingsModalities} from "@/interfaces/IGroup";
 import { formatDate } from "@/utils/Formatter";
 
 interface GroupCardProps {
-  group: IGroup;
+  group: ISporting;
 }
 
 export function GroupCard({ group }: GroupCardProps) {

@@ -45,3 +45,18 @@ export const formatMonthYear = (date: string | Date) => {
     return "";
   }
 }
+
+export const formatTime = (date: Date): string => {
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    throw new Error('A data fornecida não é válida.');
+  }
+
+  const timeFormatter = new Intl.DateTimeFormat('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false, 
+  });
+
+  return timeFormatter.format(date);
+};

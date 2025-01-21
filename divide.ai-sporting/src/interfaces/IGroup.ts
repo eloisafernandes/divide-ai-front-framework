@@ -31,6 +31,7 @@ export interface ISporting extends IGroup {
   export interface ISportingForm extends IGroupForm {
     local: string;
     sportingsModalities: SportingsModalities;
+    time?:string;
   }
 
   export enum SportingsModalities {

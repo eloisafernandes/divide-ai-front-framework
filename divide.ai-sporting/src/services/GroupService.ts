@@ -65,10 +65,10 @@ export async function createGroup(group: ISportingForm): Promise<ISporting | nul
   }
 }
 
-export async function updateGroup(group: IGroupForm): Promise<IGroup | null> {
+export async function updateGroup(group: ISportingForm): Promise<ISporting | null> {
     try {
         const token = getUserLocalStorage()?.token;
-        const response = await api.put<ApiResponse<IGroup>>(`/groups/${group.id}`, group, {
+        const response = await api.put<ApiResponse<ISporting>>(`/sportings/${group.id}`, group, {
         headers: { 'Authorization': `Bearer ${token}`, }
         });
 
@@ -80,7 +80,7 @@ export async function updateGroup(group: IGroupForm): Promise<IGroup | null> {
       if (errorResponse && errorResponse.error?.message) {
         throw new Error(errorResponse.error?.message); 
       } else {
-        throw new Error('Erro desconhecido ao atualizar no grupo'); 
+        throw new Error('Erro desconhecido ao atualizar o evento'); 
       }
     }
 }
@@ -89,7 +89,7 @@ export async function joinGroup(joinGroup: IJoinGroup): Promise<IGroup | null> {
     try {
         const token = getUserLocalStorage()?.token;
 
-        const response = await api.post<ApiResponse<IGroup>>(`/groups/join`, joinGroup, {
+        const response = await api.post<ApiResponse<IGroup>>(`/sportings/join`, joinGroup, {
         headers: { 'Authorization': `Bearer ${token}` },
         });
 
@@ -103,7 +103,7 @@ export async function joinGroup(joinGroup: IJoinGroup): Promise<IGroup | null> {
         if (errorResponse && errorResponse.error?.message) {
           throw new Error(errorResponse.error?.message); 
         } else {
-          throw new Error('Erro desconhecido ao entrar no grupo'); 
+          throw new Error('Erro desconhecido ao entrar no evento'); 
         }
     }
 }
@@ -123,7 +123,7 @@ export async function deleteGroup(id: number): Promise<void | null> {
         if (errorResponse && errorResponse.error?.message) {
           throw new Error(errorResponse.error?.message); 
         } else {
-          throw new Error('Erro desconhecido ao deletar grupo'); 
+          throw new Error('Erro desconhecido ao deletar evento'); 
         }
     }
 }
@@ -143,7 +143,7 @@ export async function leaveGroup(groupId: number, userId: number): Promise<void 
         if (errorResponse && errorResponse.error?.message) {
           throw new Error(errorResponse.error?.message); 
         } else {
-          throw new Error('Erro desconhecido ao sair do grupo'); 
+          throw new Error('Erro desconhecido ao sair do evento'); 
         }
     }
 }
@@ -163,7 +163,7 @@ export async function deleteMember(groupId: number, userId: number): Promise<voi
       if (errorResponse && errorResponse.error?.message) {
         throw new Error(errorResponse.error?.message); 
       } else {
-        throw new Error('Erro desconhecido ao deletar membro do grupo'); 
+        throw new Error('Erro desconhecido ao deletar membro do evento'); 
       }
   }
 }
