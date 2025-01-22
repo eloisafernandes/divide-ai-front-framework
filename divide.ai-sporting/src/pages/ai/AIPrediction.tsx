@@ -1,42 +1,72 @@
-
-import { ListCardsAI } from "@/components/ai/ListCardsAI";
 import { SheetMenu } from "@/components/global/sidebar/SheetMenu";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 import { Alert, message } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Piechart } from "@/components/ai/PieChartAI";
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from "@ant-design/icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAIPredictionData, useAIPredictionMutate } from "@/hooks/ai/aiPredictionHook";
-import { getUserLocalStorage } from "@/context/AuthProvider/util";
-import { useTransactionDataByUser } from "@/hooks/transacion/transacionHook";
+import { useAuth } from "@/context/AuthProvider/useAuth";
+import { useGroupDataByUser } from "@/hooks/group/groupHook";
+import { IAIPredictionRequest } from "@/interfaces/IAIPrediction";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { formatDateTime } from "@/utils/Formatter";
 
 export function AIPrediction() {
-  const { data } = useAIPredictionData();
+  const auth = useAuth();
+  const { mutate } = useAIPredictionMutate();
+  const { data: ListEvents, isPending } = useGroupDataByUser();
+  const [selectedEvent, setSelectedEvent] = useState<number | null>(null);
 
-  const mutation = useAIPredictionMutate();
-  const isPending = mutation.isPending;
+  const { data } = useAIPredictionData(selectedEvent ?? 0);
+  const [response, setResponse] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
-  const [inputValue, setInputValue] = useState<string>("");
-  const { data: transactionsDataByUser } = useTransactionDataByUser();
+  const userId = auth?.id;
 
   const fetchPrediction = async () => {
+    if (selectedEvent !== null) {
+      const request: IAIPredictionRequest = {
+        userId: userId!,
+        groupId: selectedEvent,
+      };
 
-    const id = getUserLocalStorage()?.id;
-    if(!id) return;
-
-    if (!transactionsDataByUser || transactionsDataByUser.length === 0) {
-      message.error("Nenhuma Transação cadastrada! Não é possível gerar previsão.");
-      return;
+      setLoading(true);
+      mutate(request, {
+        onSuccess: () => setLoading(false),
+        onError: () => setLoading(false),
+      });
+    } else {
+      message.error("Por favor, selecione um evento.");
     }
+  };
 
-    mutation.mutate({ 
-      userId: id,
-      prompt: inputValue 
-    });
+  useEffect(() => {
+    try {
+      const cleanedData = data?.response
+        ?.replace(/```json/g, "")
+        ?.replace(/```/g, "")
+        ?.replace(/\\r\\n/g, "")
+        ?.replace(/\\n/g, "")
+        ?.replace(/\\r/g, "")
+        ?.trim();
+
+      if (cleanedData) {
+        const parsedResponse = JSON.parse(cleanedData);
+        setResponse(parsedResponse);
+      } else {
+        setResponse(null);
+      }
+    } catch (error) {
+      setResponse(null);
+      message.error("Erro ao analisar o JSON: " + error);
+    }
+  }, [data]);
+
+  const handleEventChange = (value: string) => {
+    setSelectedEvent(parseInt(value));
   };
 
   return (
@@ -45,88 +75,127 @@ export function AIPrediction() {
       <SheetMenu />
 
       <div className="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Previsão Financeira</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Previsão de Eventos Esportivos</h2>
         <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
           <div className="flex w-full max-w-sm items-center space-x-2">
-            <Input
-              type="text"
-              size={28}
-              placeholder="Objetivo para o próximo mês"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
+            {/* Select */}
+            <Select onValueChange={handleEventChange}>
+              <SelectTrigger className="w-[180px] bg-white">
+                <SelectValue placeholder="Selecionar evento" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Eventos</SelectLabel>
+                  {ListEvents?.map((event) => (
+                    <SelectItem key={event.id} value={event.id.toString()}>
+                      {event.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
             <Button
               variant="divideDark"
               type="button"
               onClick={fetchPrediction}
               disabled={isPending}
             >
-              {isPending ? <LoadingOutlined spin /> : 
-                          <div className="flex items-center">
-                            <span className="mr-2">Gerar</span>
-                            <Sparkles size={20} />
-                          </div>
+              {isPending || loading ? <LoadingOutlined spin /> :
+                <div className="flex items-center">
+                  <span className="mr-2">Gerar</span>
+                  <Sparkles size={20} />
+                </div>
               }
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Infos Card */}
-      <ListCardsAI
-        nextIncome={data?.nextIncome || null}
-        nextExpenses={data?.nextExpenses || null}
-        isPending={isPending}
-      />
+      {selectedEvent !== null ? (
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Event Details */}
+            {isPending || loading ? (
+              <Skeleton className="h-48 w-full" />
+            ) : response?.sportDetails ? (
+              <Card className="col-span-1">
+                <CardHeader>
+                  <CardTitle>Detalhes do Evento</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p><strong>Local:</strong> {response.sportDetails.local}</p>
+                  <p><strong>Esporte:</strong> {response.sportDetails.sport}</p>
+                  <p><strong>Data e Horário:</strong> {formatDateTime(response.sportDetails.dateTime)}</p>
+                  <p><strong>Participantes:</strong> {response.sportDetails.participants}</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <span>Sem detalhes do evento disponíveis.</span>
+            )}
 
-      <Card className="col-span-4 md:col-span-4 lg:col-span-3">
-        <CardHeader>
-          <CardTitle>Despesas por categoria no próximo mês</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-1 justify-center items-center pt-10">
-          {isPending ? (
-                <div className="relative w-48 h-48">
-                  <Skeleton className="absolute inset-0 rounded-full" />
-                  <div className="absolute top-[15%] left-[15%] w-[70%] h-[70%] rounded-full bg-white"></div>
-                </div>
-          ) : data?.nextExpensesByCategory && data.nextExpensesByCategory.length > 0 ? (
-            <Piechart
-              data={data.nextExpensesByCategory}
+            {/* Cost Distribution */}
+            {isPending || loading ? (
+              <Skeleton className="h-48 w-full" />
+            ) : (
+              <Card className="col-span-1">
+                <CardHeader>
+                  <CardTitle>Distribuição de Custos</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {response?.costEstimate ? (
+                    <Piechart
+                      data={[
+                        { categoryName: "Materiais", amount: response.costEstimate.materials, categoryColor: "#36A2EB" },
+                        { categoryName: "Extras", amount: response.costEstimate.extras, categoryColor: "#FFCE56" },
+                      ]}
+                    />
+                  ) : (
+                    <span>Sem dados de custos disponíveis.</span>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+          </div>
+
+          {/* Suggestions */}
+          {isPending || loading ? (
+            <Skeleton className="h-48 w-full" />
+          ) : response?.suggestions ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Sugestões</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="list-disc pl-5">
+                  {response.suggestions.map((suggestion: string, index: number) => (
+                    <li key={index}>{suggestion}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ) : (
+            <span>Sem sugestões disponíveis.</span>
+          )}
+
+          {/* Tips */}
+          {isPending || loading ? (
+            <Skeleton className="h-48 w-full" />
+          ) : response?.tips ? (
+            <Alert
+              message="Dicas para o Evento"
+              description={<ul className="list-disc pl-5">{response.tips.map((tip: string, index: number) => <li key={index}>{tip}</li>)}</ul>}
+              type="success"
+              showIcon
             />
           ) : (
-            <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <span>Sem dados disponíveis</span>
-            </div>
+            <span>Sem dicas disponíveis.</span>
           )}
-        </CardContent>
-      </Card>
-
-      {(data || isPending) && (
-        <>
-          {isPending ? (
-            <>
-              <Skeleton className="h-24 w-full rounded-xl" />
-              <Skeleton className="h-24 w-full rounded-xl" />
-            </>
-          ) : (
-            <>
-              {data?.hasAnalysis && 
-                <Alert
-                  message="Recomendação"
-                  description={data?.recomendation}
-                  type="warning"
-                  showIcon
-                />
-              }
-              <Alert
-                message="Resumo"
-                description={data?.response}
-                type="info"
-                showIcon
-              />
-            </>
-          )}
-        </>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-32">
+          <span>Selecione um evento para gerar a previsão</span>
+        </div>
       )}
     </div>
   );

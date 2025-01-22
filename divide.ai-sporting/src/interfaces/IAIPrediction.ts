@@ -1,20 +1,24 @@
 export interface ExpenseByCategory {
-    amount: number;
-    categoryName: string;
-    categoryColor: string;
-    categoryId: number; 
+  amount: number;
+  categoryName: string;
+  categoryColor: string;
+  categoryId: number;
 }
-  
+
 export interface IAIPrediction {
-    nextExpenses: number | null;
-    nextIncome: number | null;
-    nextExpensesByCategory: ExpenseByCategory[];
-    recomendation: string;
-    response: string;
-    hasAnalysis: Boolean | null;
+  response: string;
+}
+
+export interface ChatResponse {
+  prompt: string;
+  response: string;
+  userId: number;
+  groupId: number;
+  createdAt: string;
 }
 
 export interface IAIPredictionRequest {
   userId: number;
-  prompt: string;
+  groupId: number;
+  prompt?: string | null;
 }

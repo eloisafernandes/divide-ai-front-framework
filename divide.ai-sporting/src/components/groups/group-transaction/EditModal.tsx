@@ -85,7 +85,7 @@ export function EditModal({ isOpen, onClose, groupTransactionId }: EditModalProp
         onSuccess: (data) => {
           if (data) {
             console.log("Enviado" + updatedFormData.dueDate)
-            message.success("Despesa de grupo atualizada com sucesso!");
+            message.success("Despesa do evento atualizada com sucesso!");
             onClose();
           }
         },

@@ -63,12 +63,12 @@ export function getMenuList(pathname: string): Group[] {
       ]
     },
     {
-      groupLabel: "Controle grupo",
+      groupLabel: "Controle eventos",
       menus: [
         {
-          href: "/grupos",
-          label: "Grupos",
-          active: pathname.includes("/grupos"),
+          href: "/eventos",
+          label: "Eventos Esportivos",
+          active: pathname.includes("/eventos"),
           icon: Users
         },
       ]

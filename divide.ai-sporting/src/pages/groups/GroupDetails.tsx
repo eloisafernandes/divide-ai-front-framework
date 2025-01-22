@@ -14,7 +14,7 @@ export function GroupDetails() {
   const [isDialogOpen, setIsDialogOpen] = useState(false); 
 
   if (!group) {
-    return <div>Grupo não encontrado.</div>;
+    return <div>Evento não encontrado.</div>;
   }
 
   const handleDialogOpen = () => setIsDialogOpen(true); 
