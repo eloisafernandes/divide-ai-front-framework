@@ -13,7 +13,7 @@ import { ISportingForm, SportingsModalities} from "@/interfaces/IGroup";
 import { getUserLocalStorage } from "@/context/AuthProvider/util";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CalendarIcon } from "@radix-ui/react-icons";
-
+import dayjs, { Dayjs } from 'dayjs';
 
 interface GroupFormProps {
   initialData?: ISportingForm | null;
@@ -72,11 +72,15 @@ export function GroupForm({ initialData, onSubmit, isLoading }: GroupFormProps) 
     if (initialData) {
       // const modalityKey = mapModalitiesDescriptionToEnum(initialData.sportingsModalities);
       // console.log("inicial modalidade: ", initialData.sportingsModalities);
-      
+      const time = initialData.occurrenceDate
+      ? dayjs(initialData.occurrenceDate) // Converter para dayjs
+      : null;
+
       form.setFieldsValue({
         ...initialData,
         sportingsModalities: initialData.sportingsModalities,
         // time: new Date(initialData.occurrenceDate),
+        time: time,
       });
       setOccurrenceDate(initialData.occurrenceDate || null);
     }
