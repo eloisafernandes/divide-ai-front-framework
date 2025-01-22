@@ -72,6 +72,7 @@ export function GroupForm({ initialData, onSubmit, isLoading }: GroupFormProps) 
     if (initialData) {
       // const modalityKey = mapModalitiesDescriptionToEnum(initialData.sportingsModalities);
       // console.log("inicial modalidade: ", initialData.sportingsModalities);
+      
       form.setFieldsValue({
         ...initialData,
         sportingsModalities: initialData.sportingsModalities,
